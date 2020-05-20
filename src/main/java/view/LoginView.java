@@ -14,17 +14,17 @@ public class LoginView {
     public LoginView()
     {
         initLabel();
-        initFrame();
         initTextField();
         initPasswordField();
         initJButton();
-
+        initFrame();
     }
 
     private void initLabel() {
 
         label = new JLabel();
         label.setBounds(10,10,400,100);
+        label.setVisible(true);
 
     }
 
