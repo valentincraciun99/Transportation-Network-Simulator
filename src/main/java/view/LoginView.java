@@ -48,6 +48,7 @@ public class LoginView {
     private void initTextField() {
         textField = new JTextField();
         textField.setBounds(10,10,250,25);
+        textField.setVisible(true);
 
         label.add(textField);
     }
