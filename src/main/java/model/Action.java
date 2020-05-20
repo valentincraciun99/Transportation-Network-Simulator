@@ -1,10 +1,11 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Action {
     Integer id;
-    Date time;
+    LocalDate time;
     ActionType type;
 
     public Integer getId() {
@@ -15,11 +16,11 @@ public class Action {
         this.id = id;
     }
 
-    public Date getTime() {
+    public LocalDate getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalDate time) {
         this.time = time;
     }
 

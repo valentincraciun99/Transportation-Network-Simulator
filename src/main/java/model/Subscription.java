@@ -1,10 +1,11 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Subscription {
     Integer id;
-    Date  end_date;
+    LocalDate endDate;
 
     public Integer getId() {
         return id;
@@ -14,12 +15,12 @@ public class Subscription {
         this.id = id;
     }
 
-    public Date getEnd_date() {
-        return end_date;
+    public LocalDate getEndDate() {
+        return endDate;
 
     }
 
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }
