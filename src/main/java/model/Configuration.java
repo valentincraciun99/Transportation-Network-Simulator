@@ -3,6 +3,10 @@ package model;
 import java.util.ArrayList;
 
 public class Configuration {
+    public Configuration(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     Integer id;
     String name;

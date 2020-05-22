@@ -14,7 +14,7 @@ public class UserRepository extends BaseRepository {
         super(DbConnection.getInstance());
     }
 
-    public User GetUser (String user, String password) throws SQLException {
+    public User get(String user, String password) throws SQLException {
         var params = new ArrayList<Object>();
         params.add(user);
         params.add(password);
