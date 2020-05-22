@@ -6,6 +6,7 @@ public class Configuration {
 
     Integer id;
     String name;
+    ArrayList<Node> nodes;
 
     public ArrayList<Node> getNodes() {
         return nodes;
@@ -15,7 +16,7 @@ public class Configuration {
         this.nodes = nodes;
     }
 
-    ArrayList<Node> nodes;
+
 
     public Integer getId() {
         return id;
