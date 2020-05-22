@@ -2,6 +2,7 @@ package controller;
 
 import datastorage.UserDAO;
 import model.UserRole;
+import view.CustomerView;
 import view.LoginView;
 
 import javax.swing.*;
@@ -30,7 +31,8 @@ public class LoginController {
                 && user.getSubscription().getEndDate().isAfter( LocalDate.now()))
         {
             //TODO: here should be main page
-            loginView.getFrame().dispose();
+            new CustomerController(new CustomerView(user));
+            loginView.getFrame().setVisible(false);
         }
         else if (user != null && user.getUserRole() == UserRole.customer
                 && user.getSubscription().getEndDate().isBefore( LocalDate.now()))
