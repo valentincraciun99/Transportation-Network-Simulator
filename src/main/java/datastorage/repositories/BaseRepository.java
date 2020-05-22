@@ -34,6 +34,22 @@ public abstract class BaseRepository {
 
     }
 
+    ResultSet CallStoredProcedure(String stringCall,Object param) throws SQLException {
+        var statement = connection.prepareCall(stringCall);
+
+        if(param instanceof String){
+                statement.setString(1,(String) param);
+            }
+            else if(param instanceof Integer){
+                statement.setInt(1,(Integer) param);
+            }
+
+        statement.execute();
+
+        return statement.getResultSet();
+
+    }
+
 
 
 }
