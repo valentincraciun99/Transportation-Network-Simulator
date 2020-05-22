@@ -1,14 +1,13 @@
 import controller.LoginController;
-import datastorage.UserDAO;
+import datastorage.UserRepository;
 import view.LoginView;
 
-import javax.swing.*;
 import java.sql.*;
 public class Main {
     public static void main(String[] args)
     {
 
-        LoginController loginController = new LoginController(new LoginView(),new UserDAO());
+        LoginController loginController = new LoginController(new LoginView(),new UserRepository());
 
 
         try{

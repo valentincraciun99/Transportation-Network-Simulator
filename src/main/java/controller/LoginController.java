@@ -1,19 +1,18 @@
 package controller;
 
-import datastorage.UserDAO;
+import datastorage.UserRepository;
 import model.UserRole;
 import view.CustomerView;
 import view.LoginView;
 
 import javax.swing.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class LoginController {
     LoginView loginView;
-    UserDAO userDAO;
+    UserRepository userDAO;
 
-    public LoginController(LoginView loginView, UserDAO userDAO)
+    public LoginController(LoginView loginView, UserRepository userDAO)
     {
         this.loginView = loginView;
         this.userDAO = userDAO;

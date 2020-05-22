@@ -7,7 +7,7 @@ import model.UserRole;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class UserDAO {
+public class UserRepository {
 
     public User GetUser (String username, String password)
     {
