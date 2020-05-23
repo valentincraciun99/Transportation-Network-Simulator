@@ -3,7 +3,7 @@ package model;
 public class Edge {
     Integer id;
     Integer node_from;
-    Integer node_tol;
+    Integer node_to;
     Integer value;
     Integer configId;
 
@@ -23,12 +23,12 @@ public class Edge {
         this.node_from = node_from;
     }
 
-    public Integer getNode_tol() {
-        return node_tol;
+    public Integer getNode_to() {
+        return node_to;
     }
 
-    public void setNode_tol(Integer node_tol) {
-        this.node_tol = node_tol;
+    public void setNode_to(Integer node_to) {
+        this.node_to = node_to;
     }
 
     public Integer getValue() {
@@ -47,10 +47,10 @@ public class Edge {
         this.configId = configId;
     }
 
-    public Edge(Integer id, Integer node_from, Integer node_tol, Integer value, Integer configId) {
+    public Edge(Integer id, Integer node_from, Integer node_to, Integer value, Integer configId) {
         this.id = id;
         this.node_from = node_from;
-        this.node_tol = node_tol;
+        this.node_to = node_to;
         this.value = value;
         this.configId = configId;
     }

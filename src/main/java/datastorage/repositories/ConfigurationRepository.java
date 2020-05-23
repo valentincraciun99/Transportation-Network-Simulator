@@ -15,6 +15,6 @@ public class ConfigurationRepository extends BaseRepository {
         var resultSet = CallStoredProcedure("{call get_configuration_by_user_id(?)}", userId);
         resultSet.next();
 
-        return new Configuration(resultSet.getInt(1),resultSet.getString(2));
+        return new Configuration(resultSet.getInt(1),resultSet.getString(2),resultSet.getInt(3));
     }
 }
