@@ -2,7 +2,7 @@ package datastorage.repositories;
 
 import datastorage.DbConnection;
 import model.User;
-import model.UserRole;
+import model.enums.UserRole;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
