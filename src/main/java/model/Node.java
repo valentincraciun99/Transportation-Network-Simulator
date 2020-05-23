@@ -3,6 +3,9 @@ package model;
 public class Node {
     Integer id;
     String name;
+    Integer x;
+    Integer y;
+    Integer configId;
 
     public Integer getId() {
         return id;
@@ -43,8 +46,4 @@ public class Node {
     public void setConfigId(Integer configId) {
         this.configId = configId;
     }
-
-    Integer x;
-    Integer y;
-    Integer configId;
 }
