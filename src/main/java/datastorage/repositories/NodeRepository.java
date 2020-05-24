@@ -25,4 +25,18 @@ public class NodeRepository extends BaseRepository {
 
         return node;
     }
+
+    public ArrayList<Node> getNodesByConfigurationId(Integer configurationId) throws SQLException {
+        var result = new ArrayList<Node>();
+        var resultSet = CallStoredProcedure("{call get_all_nodes_from_configuration(?)}",configurationId);
+
+        while(resultSet.next())
+        {
+            result.add(new Node(resultSet.getInt(1),resultSet.getString(2),resultSet.getInt(3),
+                                resultSet.getInt(4),resultSet.getInt(5)));
+        }
+
+        return result;
+    }
+
 }
