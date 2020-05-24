@@ -23,9 +23,13 @@ public abstract class BaseRepository {
             if(params.get(index) instanceof String){
                 statement.setString(index+1,(String) params.get(index));
             }
-            else if(params.get(index-1) instanceof Integer){
+            else if(params.get(index) instanceof Integer){
                 statement.setInt(index+1,(Integer) params.get(index));
             }
+            else if(params.get(index) instanceof Enum){
+                statement.setInt(index+1,((Enum) params.get(index)).ordinal());
+            }
+
         }
 
         statement.execute();
