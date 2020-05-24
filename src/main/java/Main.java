@@ -1,13 +1,4 @@
-import controller.LoginController;
-import datastorage.repositories.ConfigurationRepository;
-import datastorage.repositories.NodeRepository;
-import datastorage.repositories.SubscriptionRepository;
-import datastorage.repositories.UserRepository;
-import model.Configuration;
-import model.Node;
-import model.User;
-import model.enums.UserRole;
-import view.LoginView;
+import datastorage.repositories.*;
 
 import java.sql.*;
 public class Main {
@@ -17,16 +8,13 @@ public class Main {
 
         try{
             //LoginController loginController = new LoginController(new LoginView(),new UserRepository());
-            var noderepo= new NodeRepository();
+            var edgeRepo= new NodeRepository();
 
-            var node = new Node("name",255,333,2);
+            var nodes = edgeRepo.getAllNodesFromConfiguration(2);
 
-            var conf = noderepo.create(node);
-
-
-
-            System.out.println(conf.getId());
-
+            for(var node:nodes) {
+                System.out.println(node.getId());
+            }
 
 
         }

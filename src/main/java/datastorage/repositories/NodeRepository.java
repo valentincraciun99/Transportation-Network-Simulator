@@ -26,7 +26,7 @@ public class NodeRepository extends BaseRepository {
         return node;
     }
 
-    public ArrayList<Node> getNodesByConfigurationId(Integer configurationId) throws SQLException {
+    public ArrayList<Node> getAllNodesFromConfiguration(Integer configurationId) throws SQLException {
         var result = new ArrayList<Node>();
         var resultSet = CallStoredProcedure("{call get_all_nodes_from_configuration(?)}",configurationId);
 
