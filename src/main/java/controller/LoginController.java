@@ -1,31 +1,38 @@
 package controller;
 
-import datastorage.UserDAO;
-import model.UserRole;
+import datastorage.repositories.UserRepository;
+import model.enums.UserRole;
 import view.CustomerView;
 import view.LoginView;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class LoginController {
     LoginView loginView;
-    UserDAO userDAO;
+    UserRepository userDAO;
 
-    public LoginController(LoginView loginView, UserDAO userDAO)
+    public LoginController(LoginView loginView, UserRepository userRepository)
     {
         this.loginView = loginView;
-        this.userDAO = userDAO;
+        this.userDAO = userRepository;
 
-        loginView.getLoginButton().addActionListener( e -> Login());
+        loginView.getLoginButton().addActionListener( e -> {
+            try {
+                Login();
+            } catch (SQLException throwables) {
+                JOptionPane.showMessageDialog(loginView.getFrame(),"Invalid credentials");
+                throwables.printStackTrace();
+            }
+        });
     }
 
-    private void Login()
-    {
+    //TODO: if catch here sql exception if credentials dosen't exists
+    private void Login() throws SQLException {
         var userName = loginView.getTextField().getText();
         var password = loginView.getPasswordField().getPassword();
-        var user = userDAO.GetUser(userName, new String(password));
+        var user = userDAO.get(userName, new String(password));
 
         if(user != null && user.getUserRole() == UserRole.customer
                 && user.getSubscription().getEndDate().isAfter( LocalDate.now()))

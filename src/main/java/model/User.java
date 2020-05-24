@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.UserRole;
+
 import java.util.ArrayList;
 
 public class User {
@@ -13,6 +15,24 @@ public class User {
     private ArrayList<Action> actions;
     private Subscription subscription;
     private Configuration configuration;
+
+    public User(Integer id, UserRole userRole, String email, String password, String company, Integer age) {
+        this.id = id;
+        this.userRole = userRole;
+        this.email = email;
+        this.password = password;
+        this.company = company;
+        this.age = age;
+    }
+    public User( UserRole userRole, String email, String password, String company, Integer age) {
+        this.userRole = userRole;
+        this.email = email;
+        this.password = password;
+        this.company = company;
+        this.age = age;
+    }
+
+
 
     public ArrayList<Action> getActions() {
         return actions;

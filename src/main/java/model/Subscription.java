@@ -6,6 +6,12 @@ import java.util.Date;
 public class Subscription {
     Integer id;
     LocalDate endDate;
+    //java.sql.Date.valueOf( localDate );  sqlDate.toLocalDate();
+
+    public Subscription(Integer id, LocalDate endDate) {
+        this.id = id;
+        this.endDate = endDate;
+    }
 
     public Integer getId() {
         return id;

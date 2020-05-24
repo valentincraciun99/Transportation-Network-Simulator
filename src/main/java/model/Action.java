@@ -1,7 +1,8 @@
 package model;
 
+import model.enums.ActionType;
+
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Action {
     Integer id;
