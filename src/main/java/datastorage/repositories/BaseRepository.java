@@ -47,6 +47,9 @@ public abstract class BaseRepository {
             else if(param instanceof Integer){
                 statement.setInt(1,(Integer) param);
             }
+            else if(param instanceof Enum){
+            statement.setInt(1,(((Enum) param).ordinal()));
+            }
 
         statement.execute();
 
