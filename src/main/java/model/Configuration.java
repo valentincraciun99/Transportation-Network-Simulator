@@ -9,6 +9,11 @@ public class Configuration {
         this.userId = userId;
     }
 
+    public Configuration( String name,Integer userId) {
+        this.name = name;
+        this.userId = userId;
+    }
+
     Integer id;
     String name;
     Integer userId;
