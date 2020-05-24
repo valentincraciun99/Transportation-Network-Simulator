@@ -4,8 +4,24 @@ public class Edge {
     Integer id;
     Integer node_from;
     Integer node_to;
+
+    public Edge(Integer node_from, Integer node_to, Integer value, Integer configId) {
+        this.node_from = node_from;
+        this.node_to = node_to;
+        this.value = value;
+        this.configId = configId;
+    }
+
     Integer value;
     Integer configId;
+
+    public Edge(Integer id, Integer node_from, Integer node_to, Integer value, Integer configId) {
+        this.id = id;
+        this.node_from = node_from;
+        this.node_to = node_to;
+        this.value = value;
+        this.configId = configId;
+    }
 
     public Integer getId() {
         return id;
@@ -47,11 +63,5 @@ public class Edge {
         this.configId = configId;
     }
 
-    public Edge(Integer id, Integer node_from, Integer node_to, Integer value, Integer configId) {
-        this.id = id;
-        this.node_from = node_from;
-        this.node_to = node_to;
-        this.value = value;
-        this.configId = configId;
-    }
+
 }
