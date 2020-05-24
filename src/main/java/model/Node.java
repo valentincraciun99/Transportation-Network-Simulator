@@ -7,6 +7,13 @@ public class Node {
     Integer y;
     Integer configId;
 
+    public Node(String name, Integer x, Integer y, Integer configId) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.configId = configId;
+    }
+
     public Integer getId() {
         return id;
     }
