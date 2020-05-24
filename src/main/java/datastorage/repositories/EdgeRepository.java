@@ -11,7 +11,7 @@ public class EdgeRepository extends BaseRepository{
         super(DbConnection.getInstance());
     }
     //TODO: VERIFY IN SQL STORED PROCEDURE THAT NODE_FROM != NODE_TO WHEN CREATE A EDGE
-    public Edge Create(Edge edge) throws SQLException {
+    public Edge create(Edge edge) throws SQLException {
         var params = new ArrayList<Object>();
         params.add(edge.getNode_from());
         params.add(edge.getNode_to());
@@ -24,4 +24,19 @@ public class EdgeRepository extends BaseRepository{
 
         return edge;
     }
+
+    public ArrayList<Edge> getAllEdgesFromConfiguration(Integer config_d) throws SQLException {
+        var result = new ArrayList<Edge>();
+
+        var resultSet =  CallStoredProcedure("{call get_all_edges_from_configuration(?)}", config_d);
+
+        while(resultSet.next())
+        {
+            result.add(new Edge(resultSet.getInt(1),resultSet.getInt(2),resultSet.getInt(3)
+                        ,resultSet.getInt(4),resultSet.getInt(5)));
+        }
+
+        return  result;
+    }
+
 }
