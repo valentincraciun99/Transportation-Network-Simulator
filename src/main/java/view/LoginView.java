@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 
 
 public class LoginView {
@@ -24,6 +25,7 @@ public class LoginView {
 
         label = new JLabel();
         label.setBounds(10,10,400,100);
+        label.setBackground(Color.black);
         label.setVisible(true);
 
     }
