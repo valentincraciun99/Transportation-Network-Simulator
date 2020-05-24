@@ -42,6 +42,22 @@ public class UserRepository extends BaseRepository {
 
     }
 
+    public User create(User user) throws SQLException {
+        var params = new ArrayList<Object>();
+        params.add(user.getUserRole());
+        params.add(user.getEmail());
+        params.add(user.getPassword());
+        params.add(user.getCompany());
+        params.add(user.getAge());
+
+        var resultSet = CallStoredProcedure("{call add_user(?,?,?,?,?)}", params);
+        resultSet.next();
+        user.setId(resultSet.getInt(1));
+
+        return user;
+
+    }
+
 
 
 }
