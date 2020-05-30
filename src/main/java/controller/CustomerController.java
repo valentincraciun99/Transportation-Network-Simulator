@@ -42,8 +42,7 @@ public class CustomerController {
             }
         });
 
-        /*g.setColor(Color.black);
-        g.drawLine(100,200,300,400);*/
+ 
         customerView.getButton().addActionListener(e-> {
             try {
                 draw();
