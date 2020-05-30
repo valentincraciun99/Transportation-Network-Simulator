@@ -9,7 +9,6 @@ import view.CustomerView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -23,7 +22,8 @@ public class CustomerController {
     NodeAdditionService nodeAdditionService;
     ConfigurationRepository configurationRepository;
     Configuration configuration;
-    Graphics g;
+    BufferedImage image;
+
     public CustomerController (CustomerView customerView, ConfigurationRepository configurationRepository, NodeAdditionService nodeAdditionService)
     {
         this.customerView = customerView;
@@ -32,8 +32,9 @@ public class CustomerController {
         currentAction = CurrentAction.none;
 
         try {
+            LoadImage();
             LoadConfiguration();
-        } catch (SQLException throwables) {
+        } catch (SQLException | IOException throwables) {
             throwables.printStackTrace();
         }
 
@@ -73,7 +74,7 @@ public class CustomerController {
         {
             ex.printStackTrace();
         }
-        
+
        if(configuration == null)
        {
            String configurationName = (String) JOptionPane.showInputDialog(
@@ -102,19 +103,21 @@ public class CustomerController {
                 null,
                 null
         );
-        //TODO: Verify if node is saved in DB FIRST
-
-        var file = new File("C:\\Users\\Valentin\\AppData\\Local\\gara.png");
-        final BufferedImage image = ImageIO.read(file);
-
-
         nodeAdditionService.Execute(new NodeAdditionRequest(configuration.getId(),nodeName,x,y));
 
+        DrawNode(nodeName,x,y);
+    }
+
+    private void LoadImage() throws IOException {
+        var file = new File("C:\\Users\\Valentin\\AppData\\Local\\gara.png");
+        image = ImageIO.read(file);
+    }
+
+    private void DrawNode(String nodeName, Integer x,Integer y){
         if(nodeName != null) {
             customerView.drawNodeTextField(x,y,nodeName,image);
             customerView.drawNode(x,y,image);
         }
-
     }
 
 }
