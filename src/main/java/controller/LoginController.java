@@ -35,10 +35,12 @@ public class LoginController {
         var user = userDAO.get(userName, new String(password));
 
         if(user != null && user.getUserRole() == UserRole.customer
-                && user.getSubscription().getEndDate().isAfter( LocalDate.now()))
+                /*&& user.getSubscription().getEndDate().isAfter( LocalDate.now())*/)
         {
             //TODO: here should be main page
             new CustomerController(new CustomerView(user));
+
+            //TODO: add an event in main to create customerController and dispose login
             loginView.getFrame().setVisible(false);
         }
         else if (user != null && user.getUserRole() == UserRole.customer

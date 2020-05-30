@@ -4,6 +4,8 @@ import model.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class CustomerView {
     private JFrame frame;
@@ -13,19 +15,41 @@ public class CustomerView {
     private JLabel userInfo;
     private JTextArea userCredentialsTextField;
     private JButton button = new JButton();
+    private ArrayList<JTextField> nodesTextFields= new ArrayList<>();
 
-    User customer;
+    private final User customer;
 
 
     public CustomerView(User customer)
     {
         this.customer = customer;
+
         initTextField();
         initUserInfoLabel();
         initDrawingLabel();
         initButtonsLabel();
         initMainLabel();
         initFrame();
+    }
+
+    public void drawNodeTextField(Integer x, Integer y, String nodeName, BufferedImage image)
+    {
+        var nodeTextField = new JTextField();
+        nodeTextField.setBounds(x - image.getWidth() / 2, y - image.getHeight() / 2 - 25, image.getWidth(), 25);
+        nodeTextField.setEditable(false);
+        nodeTextField.setBackground(Color.WHITE);
+        nodeTextField.setSelectedTextColor(Color.BLACK);
+        nodeTextField.setText(nodeName);
+        nodeTextField.setVisible(true);
+        nodesTextFields.add(nodeTextField);
+        drawingLabel.add(nodeTextField);
+
+    }
+
+    public void drawNode(Integer x,Integer y,BufferedImage image)
+    {
+        Graphics g = drawingLabel.getGraphics();
+        g.drawImage(image, x - image.getWidth() / 2, y - image.getHeight() / 2, null);
     }
 
     private void initTextField() {
@@ -55,7 +79,7 @@ public class CustomerView {
     private void initDrawingLabel() {
         drawingLabel = new JLabel();
         drawingLabel.setBounds(10,130,765,500);
-        drawingLabel.setBackground(Color.white);
+        drawingLabel.setBackground(Color.black);
         drawingLabel.setOpaque(true);
         drawingLabel.setVisible(true);
 
