@@ -14,7 +14,7 @@ public class CustomerView {
     private JLabel drawingLabel;
     private JLabel userInfo;
     private JTextArea userCredentialsTextField;
-    private JButton button = new JButton();
+    private JButton buttonSetFlagToDrawing;
     private ArrayList<JTextField> nodesTextFields= new ArrayList<>();
 
     private final User customer;
@@ -27,9 +27,18 @@ public class CustomerView {
         initTextField();
         initUserInfoLabel();
         initDrawingLabel();
+        initButtons();
         initButtonsLabel();
         initMainLabel();
         initFrame();
+    }
+
+    private void initButtons() {
+        buttonSetFlagToDrawing = new JButton();
+        buttonSetFlagToDrawing.setVisible(true);
+        buttonSetFlagToDrawing.setBounds(20,20,150,50);
+        buttonSetFlagToDrawing.setText("Add Node");
+
     }
 
     public void drawNodeTextField(Integer x, Integer y, String nodeName, BufferedImage image)
@@ -55,10 +64,11 @@ public class CustomerView {
     private void initTextField() {
         userCredentialsTextField = new JTextArea();
 
-        userCredentialsTextField.setBounds(300,20,150,30);
+        userCredentialsTextField.setBounds(650,0,150,50);
         String text = customer.getEmail() + '\n'+ customer.getCompany();
         userCredentialsTextField.setLineWrap(true);
         userCredentialsTextField.setText(text);
+        userCredentialsTextField.setBackground(Color.LIGHT_GRAY);
         userCredentialsTextField.setEditable(false);
         userCredentialsTextField.setVisible(true);
 
@@ -66,7 +76,7 @@ public class CustomerView {
     }
 
     private void initUserInfoLabel() {
-        userInfo = new JLabel();
+       // userInfo = new JLabel();
     }
 
     private void initMainLabel() {
@@ -79,15 +89,15 @@ public class CustomerView {
     private void initDrawingLabel() {
         drawingLabel = new JLabel();
         drawingLabel.setBounds(10,130,765,500);
-        drawingLabel.setBackground(Color.black);
+        drawingLabel.setBackground(Color.LIGHT_GRAY);
         drawingLabel.setOpaque(true);
         drawingLabel.setVisible(true);
 
 
     }
 
-    public JButton getButton() {
-        return button;
+    public JButton getButtonSetFlagToDrawing() {
+        return buttonSetFlagToDrawing;
     }
 
     private void initButtonsLabel() {
@@ -98,10 +108,7 @@ public class CustomerView {
         buttonsLabel.setVisible(true);
 
         buttonsLabel.add(userCredentialsTextField);
-        buttonsLabel.add(button);
-        button.setVisible(true);
-        button.setBounds(20,20,150,50);
-
+        buttonsLabel.add(buttonSetFlagToDrawing);
 
     }
 

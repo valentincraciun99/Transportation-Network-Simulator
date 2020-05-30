@@ -1,5 +1,8 @@
 package controller;
 
+import business.NodeAdditionService;
+import datastorage.repositories.ConfigurationRepository;
+import datastorage.repositories.NodeRepository;
 import datastorage.repositories.UserRepository;
 import model.enums.UserRole;
 import view.CustomerView;
@@ -11,12 +14,12 @@ import java.time.LocalDate;
 
 public class LoginController {
     LoginView loginView;
-    UserRepository userDAO;
+    UserRepository userRepository;
 
     public LoginController(LoginView loginView, UserRepository userRepository)
     {
         this.loginView = loginView;
-        this.userDAO = userRepository;
+        this.userRepository = userRepository;
 
         loginView.getLoginButton().addActionListener( e -> {
             try {
@@ -32,13 +35,13 @@ public class LoginController {
     private void Login() throws SQLException {
         var userName = loginView.getTextField().getText();
         var password = loginView.getPasswordField().getPassword();
-        var user = userDAO.get(userName, new String(password));
+        var user = userRepository.get(userName, new String(password));
 
         if(user != null && user.getUserRole() == UserRole.customer
                 /*&& user.getSubscription().getEndDate().isAfter( LocalDate.now())*/)
         {
             //TODO: here should be main page
-            new CustomerController(new CustomerView(user));
+            new CustomerController(new CustomerView(user),new ConfigurationRepository(),new NodeAdditionService(new NodeRepository()));
 
             //TODO: add an event in main to create customerController and dispose login
             loginView.getFrame().setVisible(false);
