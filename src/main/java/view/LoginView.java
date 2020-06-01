@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 
 public class LoginView {
@@ -11,59 +12,76 @@ public class LoginView {
     private JPasswordField passwordField;
     private JButton loginButton;
     private JLabel label;
+    private BufferedImage logo;
 
     public LoginView()
     {
-        initLabel();
+
         initTextField();
         initPasswordField();
         initJButton();
+        initLabel();
         initFrame();
     }
 
     private void initLabel() {
 
         label = new JLabel();
-        label.setBounds(10,10,400,100);
-        label.setBackground(Color.black);
+        label.setBounds(0,0,350,400);
+        label.setBackground(Color.WHITE);
+        label.setOpaque(true);
         label.setVisible(true);
 
+        label.add(passwordField);
+        label.add(loginButton);
+        label.add(textField);
     }
 
     private void initJButton() {
         loginButton = new JButton("Login");
-        loginButton.setBounds(90,80,80,30);
+        loginButton.setBounds(130,260,80,30);
+        loginButton.setOpaque(true);
+        loginButton.setBackground(Color.BLUE);
+        loginButton.setBorderPainted(true);
+        loginButton.setForeground(Color.BLACK);
         loginButton.setVisible(true);
 
-        label.add(loginButton);
+
     }
 
     private void initPasswordField() {
 
         passwordField = new JPasswordField();
-        passwordField.setBounds(10,45,250,25);
-
-        label.add(passwordField);
+        passwordField.setBounds(40,220,250,25);
+        passwordField.setBackground(Color.WHITE);
+        passwordField.setForeground(Color.BLUE);
+        passwordField.setVisible(true);
 
     }
 
     private void initTextField() {
         textField = new JTextField();
-        textField.setBounds(10,10,250,25);
+        textField.setBounds(40,180,250,25);
+        textField.setBackground(Color.WHITE);
+        textField.setForeground(Color.BLUE);
         textField.setVisible(true);
 
-        label.add(textField);
     }
 
     private void initFrame() {
         frame = new JFrame("Login");
-        frame.getContentPane().setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(285, 150);
+        frame.setSize(350, 400);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
+
+        frame.add(label);
         frame.setVisible(true);
-        frame.setContentPane(label);
+    }
+
+    public void drawLogo(Graphics g)
+    {
+        g.drawImage(logo,78,0,null);
     }
 
     public JFrame getFrame() {
@@ -87,4 +105,8 @@ public class LoginView {
     }
 
 
+    public void setLogo(BufferedImage image) {
+
+        logo = image;
+    }
 }

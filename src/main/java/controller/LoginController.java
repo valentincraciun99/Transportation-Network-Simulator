@@ -11,7 +11,11 @@ import view.CustomerView;
 import view.LoginView;
 import view.tools.Arrow;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -23,15 +27,27 @@ public class LoginController {
     {
         this.loginView = loginView;
         this.userRepository = userRepository;
-
+        try {
+            LoadLogo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         loginView.getLoginButton().addActionListener( e -> {
             try {
+
                 Login();
             } catch (SQLException throwables) {
                 JOptionPane.showMessageDialog(loginView.getFrame(),"Invalid credentials");
                 throwables.printStackTrace();
             }
         });
+    }
+
+    private void LoadLogo() throws IOException {
+        var file = new File("E:\\Projects\\Transportation-Network-Simulator\\resources\\logo.jpg");
+        loginView.setLogo(ImageIO.read(file));
+
+        loginView.drawLogo(loginView.getLabel().getGraphics());
     }
 
     //TODO: if catch here sql exception if credentials dosen't exists
