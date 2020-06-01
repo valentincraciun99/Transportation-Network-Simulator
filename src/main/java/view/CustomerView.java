@@ -2,6 +2,7 @@ package view;
 
 import model.Node;
 import model.User;
+import view.tools.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class CustomerView {
     private JTextArea userCredentialsTextField;
     private JButton buttonSetFlagToDrawing;
     private BufferedImage image;
+    public Arrow arrow;
 
 
 
@@ -25,9 +27,10 @@ public class CustomerView {
     private final User customer;
 
 
-    public CustomerView(User customer)
+    public CustomerView(User customer,Arrow arrow)
     {
         this.customer = customer;
+        this.arrow = arrow;
 
         initTextField();
         initUserInfoLabel();
