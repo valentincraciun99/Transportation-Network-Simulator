@@ -121,11 +121,11 @@ public class CustomerController {
 
         customerView.getAddNodeButton().addActionListener(e-> {
             currentAction = !(currentAction.equals( CurrentAction.drawNode))?CurrentAction.drawNode:CurrentAction.none;
-
         });
 
         customerView.getAddEdgeButton().addActionListener(e->{
             currentAction = !(currentAction.equals( CurrentAction.drawEdge))?CurrentAction.drawEdge:CurrentAction.none;
+            selectedNodes.clear();
         });
 
     }
