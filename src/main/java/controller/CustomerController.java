@@ -1,10 +1,12 @@
 package controller;
 
+import business.EdgeAdditionService;
 import business.NodeAdditionService;
 import controller.enums.CurrentAction;
 import datastorage.repositories.ConfigurationRepository;
 import datastorage.repositories.NodeRepository;
 import model.Configuration;
+import model.Edge;
 import model.Node;
 import model.request.NodeAdditionRequest;
 import view.CustomerView;
@@ -25,16 +27,20 @@ public class CustomerController {
     CustomerView customerView ;
     CurrentAction currentAction;
     NodeAdditionService nodeAdditionService;
+    EdgeAdditionService edgeAdditionService;
     ConfigurationRepository configurationRepository;
     NodeRepository nodeRepository;
     Configuration configuration;
     ArrayList<Node> nodes;
+    ArrayList<Edge> edges;
     Queue<Node> selectedNodes;
 
-    public CustomerController (CustomerView customerView, ConfigurationRepository configurationRepository, NodeRepository nodeRepository, NodeAdditionService nodeAdditionService)
+    public CustomerController (CustomerView customerView, ConfigurationRepository configurationRepository
+            , NodeRepository nodeRepository, NodeAdditionService nodeAdditionService,EdgeAdditionService edgeAdditionService)
     {
         this.customerView = customerView;
         this.nodeAdditionService = nodeAdditionService;
+        this.edgeAdditionService = edgeAdditionService;
         this.configurationRepository = configurationRepository;
         this.nodeRepository = nodeRepository;
 
@@ -55,6 +61,7 @@ public class CustomerController {
             LoadImage();
             LoadConfiguration();
             LoadNodes();
+            LoadEdges();
         } catch (SQLException | IOException throwables) {
             throwables.printStackTrace();
         }
@@ -85,7 +92,16 @@ public class CustomerController {
                             Node firstNode = selectedNodes.poll();
                             Node secondNode = selectedNodes.poll();
 
-                            customerView.arrow.draw(firstNode.getX()-5,firstNode.getY()-5,secondNode.getX()+5,secondNode.getY()+5,Color.DARK_GRAY,Color.ORANGE,4,customerView.getDrawingLabel().getGraphics());
+                            Edge edge = edgeAdditionService.Execute(new Edge(firstNode.getId(),secondNode.getId()
+                                    ,euclidianDistance(firstNode.getX(),firstNode.getY(),secondNode.getX(),secondNode.getY()),configuration.getId()));
+
+                            if(edge!=null) {
+                                customerView.arrow.draw(firstNode.getX() - 5, firstNode.getY() - 5
+                                        , secondNode.getX() + 5, secondNode.getY() + 5
+                                        , Color.DARK_GRAY, Color.ORANGE, 4
+                                        , customerView.getDrawingLabel().getGraphics());
+                                edges.add(edge);
+                            }
                         }
 
 
@@ -108,6 +124,17 @@ public class CustomerController {
             currentAction = !(currentAction.equals( CurrentAction.drawEdge))?CurrentAction.drawEdge:CurrentAction.none;
         });
 
+    }
+
+    private void LoadEdges() {
+        edges = new ArrayList<>();
+    }
+
+    static Integer euclidianDistance(int x1, int y1, int x2, int y2)
+    {
+        // Calculating distance
+        return (int) (Math.sqrt(Math.pow(x2 - x1, 2) +
+                Math.pow(y2 - y1, 2) * 1.0));
     }
 
     private Node findNode(int x, int y) {
