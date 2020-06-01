@@ -44,7 +44,7 @@ public class LoginController {
                 /*&& user.getSubscription().getEndDate().isAfter( LocalDate.now())*/)
         {
             //TODO: here should be main page
-            new CustomerController(new CustomerView(user, new Arrow()),new ConfigurationRepository(),new NodeRepository(),new NodeAdditionService(new NodeRepository()),new EdgeAdditionService(new EdgeRepository()));
+            new CustomerController(new CustomerView(user, new Arrow()),new ConfigurationRepository(),new NodeRepository(),new EdgeRepository(),new NodeAdditionService(new NodeRepository()),new EdgeAdditionService(new EdgeRepository()));
 
             //TODO: add an event in main to create customerController and dispose login
             loginView.getFrame().setVisible(false);

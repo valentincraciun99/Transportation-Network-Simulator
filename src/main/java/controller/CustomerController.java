@@ -4,6 +4,7 @@ import business.EdgeAdditionService;
 import business.NodeAdditionService;
 import controller.enums.CurrentAction;
 import datastorage.repositories.ConfigurationRepository;
+import datastorage.repositories.EdgeRepository;
 import datastorage.repositories.NodeRepository;
 import model.Configuration;
 import model.Edge;
@@ -30,19 +31,21 @@ public class CustomerController {
     EdgeAdditionService edgeAdditionService;
     ConfigurationRepository configurationRepository;
     NodeRepository nodeRepository;
+    EdgeRepository edgeRepository;
     Configuration configuration;
     ArrayList<Node> nodes;
     ArrayList<Edge> edges;
     Queue<Node> selectedNodes;
 
     public CustomerController (CustomerView customerView, ConfigurationRepository configurationRepository
-            , NodeRepository nodeRepository, NodeAdditionService nodeAdditionService,EdgeAdditionService edgeAdditionService)
+            , NodeRepository nodeRepository,EdgeRepository edgeRepository, NodeAdditionService nodeAdditionService,EdgeAdditionService edgeAdditionService)
     {
         this.customerView = customerView;
         this.nodeAdditionService = nodeAdditionService;
         this.edgeAdditionService = edgeAdditionService;
         this.configurationRepository = configurationRepository;
         this.nodeRepository = nodeRepository;
+        this.edgeRepository = edgeRepository;
 
 
         selectedNodes =  new LinkedList<>();
@@ -54,6 +57,7 @@ public class CustomerController {
             customerView.getMainLabel().remove(customerView.getButtonLoadLastConfiguration());
 
             drawInitialNodes();
+            drawInitialEdges();
 
         });
 
@@ -126,8 +130,32 @@ public class CustomerController {
 
     }
 
-    private void LoadEdges() {
-        edges = new ArrayList<>();
+    private void drawInitialEdges() {
+        Node firstNode =null;
+        Node secondNode =null;
+        for(var edge:edges)
+        {
+            for(var node:nodes)
+            {
+                if(node.getId() == edge.getNode_from())
+                    firstNode = node;
+                if(node.getId() == edge.getNode_to())
+                    secondNode = node;
+            }
+            if(firstNode !=  null && secondNode !=null) {
+
+                customerView.arrow.draw(firstNode.getX() - 5, firstNode.getY() - 5
+                        , secondNode.getX() + 5, secondNode.getY() + 5
+                        , Color.DARK_GRAY, Color.ORANGE, 4
+                        , customerView.getDrawingLabel().getGraphics());
+            }
+
+        }
+    }
+
+    private void LoadEdges() throws SQLException {
+        edges = edgeRepository.getAllEdgesFromConfiguration(configuration.getId());
+
     }
 
     static Integer euclidianDistance(int x1, int y1, int x2, int y2)
