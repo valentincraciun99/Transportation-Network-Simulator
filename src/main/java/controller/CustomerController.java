@@ -3,7 +3,9 @@ package controller;
 import business.NodeAdditionService;
 import controller.enums.CurrentAction;
 import datastorage.repositories.ConfigurationRepository;
+import datastorage.repositories.NodeRepository;
 import model.Configuration;
+import model.Node;
 import model.request.NodeAdditionRequest;
 import view.CustomerView;
 
@@ -15,25 +17,38 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CustomerController {
     CustomerView customerView ;
     CurrentAction currentAction;
     NodeAdditionService nodeAdditionService;
     ConfigurationRepository configurationRepository;
+    NodeRepository nodeRepository;
     Configuration configuration;
-    BufferedImage image;
+    ArrayList<Node> nodes;
 
-    public CustomerController (CustomerView customerView, ConfigurationRepository configurationRepository, NodeAdditionService nodeAdditionService)
+    public CustomerController (CustomerView customerView, ConfigurationRepository configurationRepository, NodeRepository nodeRepository, NodeAdditionService nodeAdditionService)
     {
         this.customerView = customerView;
         this.nodeAdditionService = nodeAdditionService;
         this.configurationRepository = configurationRepository;
+        this.nodeRepository = nodeRepository;
         currentAction = CurrentAction.none;
+
+        customerView.getButtonLoadLastConfiguration().addActionListener(e->{
+
+            customerView.getButtonLoadLastConfiguration().setVisible(false);
+            customerView.getMainLabel().remove(customerView.getButtonLoadLastConfiguration());
+
+            drawInitialNodes();
+
+        });
 
         try {
             LoadImage();
             LoadConfiguration();
+            LoadNodes();
         } catch (SQLException | IOException throwables) {
             throwables.printStackTrace();
         }
@@ -63,6 +78,19 @@ public class CustomerController {
 
         });
 
+
+    }
+
+    private void drawInitialNodes() {
+
+        for(var node:nodes)
+        {
+            drawNode(node.getName(),node.getX(),node.getY());
+        }
+    }
+
+    private void LoadNodes() throws SQLException {
+        nodes = nodeRepository.getAllNodesFromConfiguration(configuration.getId());
 
     }
 
@@ -103,21 +131,22 @@ public class CustomerController {
                 null,
                 null
         );
-        nodeAdditionService.Execute(new NodeAdditionRequest(configuration.getId(),nodeName,x,y));
+        nodes.add(
+                nodeAdditionService.Execute(new NodeAdditionRequest(configuration.getId(),nodeName,x,y))
+        );
 
-        DrawNode(nodeName,x,y);
+        drawNode(nodeName,x,y);
     }
 
     private void LoadImage() throws IOException {
         var file = new File("C:\\Users\\Valentin\\AppData\\Local\\gara.png");
-        image = ImageIO.read(file);
+        customerView.setImage(ImageIO.read(file));
     }
 
-    private void DrawNode(String nodeName, Integer x,Integer y){
-        if(nodeName != null) {
-            customerView.drawNodeTextField(x,y,nodeName,image);
-            customerView.drawNode(x,y,image);
-        }
+    private void drawNode(String nodeName, Integer x,Integer y){
+
+            customerView.drawNode(nodeName,x,y);
+            customerView.drawNodeTextField(x,y,nodeName);
     }
 
 }

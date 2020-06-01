@@ -1,5 +1,6 @@
 package view;
 
+import model.Node;
 import model.User;
 
 import javax.swing.*;
@@ -12,9 +13,13 @@ public class CustomerView {
     private JLabel mainLabel;
     private JLabel buttonsLabel;
     private JLabel drawingLabel;
-    private JLabel userInfo;
+    private JButton loadLastConfiguration;
     private JTextArea userCredentialsTextField;
     private JButton buttonSetFlagToDrawing;
+    private BufferedImage image;
+
+
+
     private ArrayList<JTextField> nodesTextFields= new ArrayList<>();
 
     private final User customer;
@@ -26,8 +31,8 @@ public class CustomerView {
 
         initTextField();
         initUserInfoLabel();
-        initDrawingLabel();
         initButtons();
+        initDrawingLabel();
         initButtonsLabel();
         initMainLabel();
         initFrame();
@@ -39,9 +44,18 @@ public class CustomerView {
         buttonSetFlagToDrawing.setBounds(20,20,150,50);
         buttonSetFlagToDrawing.setText("Add Node");
 
+
+        loadLastConfiguration =new JButton();
+        loadLastConfiguration.setVisible(true);
+        loadLastConfiguration.setBounds(300,111,150,20);
+        loadLastConfiguration.setText("Load last configuration");
+        loadLastConfiguration.setBackground(Color.ORANGE);
+        loadLastConfiguration.setOpaque(true);
+
+
     }
 
-    public void drawNodeTextField(Integer x, Integer y, String nodeName, BufferedImage image)
+    public void drawNodeTextField(Integer x, Integer y, String nodeName)
     {
         var nodeTextField = new JTextField();
         nodeTextField.setBounds(x - image.getWidth() / 2, y - image.getHeight() / 2 - 25, image.getWidth(), 25);
@@ -55,10 +69,12 @@ public class CustomerView {
 
     }
 
-    public void drawNode(Integer x,Integer y,BufferedImage image)
+    public void drawNode(String nodeName,Integer x,Integer y)
     {
-        Graphics g = drawingLabel.getGraphics();
-        g.drawImage(image, x - image.getWidth() / 2, y - image.getHeight() / 2, null);
+        if(nodeName != null) {
+            Graphics g = drawingLabel.getGraphics();
+            g.drawImage(image, x - image.getWidth() / 2, y - image.getHeight() / 2, null);
+        }
     }
 
     private void initTextField() {
@@ -84,10 +100,18 @@ public class CustomerView {
         mainLabel.setBounds(0,0,800,600);
         mainLabel.add(buttonsLabel,0);
         mainLabel.add(drawingLabel,1);
+        mainLabel.add(loadLastConfiguration,2);
     }
 
     private void initDrawingLabel() {
-        drawingLabel = new JLabel();
+        drawingLabel = new JLabel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+            }
+
+        };
         drawingLabel.setBounds(10,130,765,500);
         drawingLabel.setBackground(Color.LIGHT_GRAY);
         drawingLabel.setOpaque(true);
@@ -96,19 +120,23 @@ public class CustomerView {
 
     }
 
+
     public JButton getButtonSetFlagToDrawing() {
         return buttonSetFlagToDrawing;
     }
 
     private void initButtonsLabel() {
         buttonsLabel = new JLabel();
+
+        buttonsLabel.add(userCredentialsTextField);
+        buttonsLabel.add(buttonSetFlagToDrawing);
+
         buttonsLabel.setBounds(10,10,765,100);
         buttonsLabel.setBackground(Color.RED);
         buttonsLabel.setOpaque(true);
         buttonsLabel.setVisible(true);
 
-        buttonsLabel.add(userCredentialsTextField);
-        buttonsLabel.add(buttonSetFlagToDrawing);
+
 
     }
 
@@ -118,6 +146,7 @@ public class CustomerView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 650);
         frame.setLocationRelativeTo(null);
+
         frame.setResizable(false);
 
         frame.setContentPane(mainLabel);
@@ -141,11 +170,17 @@ public class CustomerView {
         return drawingLabel;
     }
 
-    public JLabel getUserInfo() {
-        return userInfo;
-    }
 
     public User getCustomer() {
         return customer;
+    }
+
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    public JButton getButtonLoadLastConfiguration(){
+        return loadLastConfiguration;
     }
 }
