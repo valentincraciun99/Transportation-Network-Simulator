@@ -11,13 +11,15 @@ import view.CustomerView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class CustomerController {
     CustomerView customerView ;
@@ -27,6 +29,7 @@ public class CustomerController {
     NodeRepository nodeRepository;
     Configuration configuration;
     ArrayList<Node> nodes;
+    Queue<Node> selectedNodes;
 
     public CustomerController (CustomerView customerView, ConfigurationRepository configurationRepository, NodeRepository nodeRepository, NodeAdditionService nodeAdditionService)
     {
@@ -34,6 +37,9 @@ public class CustomerController {
         this.nodeAdditionService = nodeAdditionService;
         this.configurationRepository = configurationRepository;
         this.nodeRepository = nodeRepository;
+
+
+        selectedNodes =  new LinkedList<>();
         currentAction = CurrentAction.none;
 
         customerView.getButtonLoadLastConfiguration().addActionListener(e->{
@@ -63,6 +69,26 @@ public class CustomerController {
                     if(currentAction.equals(CurrentAction.drawNode))
                     {
                         addNewNode(e.getX(),e.getY());
+
+                    }
+                    else if(currentAction.equals(CurrentAction.drawEdge))
+                    {
+                        Node node = findNode(e.getX(),e.getY());
+
+                        if(node != null)
+                        {
+                            selectedNodes.add(node);
+                        }
+
+                        if(selectedNodes.size()>=2)
+                        {
+                            Node firstNode = selectedNodes.poll();
+                            Node secondNode = selectedNodes.poll();
+
+                            customerView.arrow.draw(firstNode.getX()-5,firstNode.getY()-5,secondNode.getX()+5,secondNode.getY()+5,Color.DARK_GRAY,Color.ORANGE,4,customerView.getDrawingLabel().getGraphics());
+                        }
+
+
                     }
 
                 } catch (IOException | SQLException ioException) {
@@ -73,12 +99,29 @@ public class CustomerController {
         });
 
 
-        customerView.getButtonSetFlagToDrawing().addActionListener(e-> {
+        customerView.getAddNodeButton().addActionListener(e-> {
             currentAction = !(currentAction.equals( CurrentAction.drawNode))?CurrentAction.drawNode:CurrentAction.none;
 
         });
 
+        customerView.getAddEdgeButton().addActionListener(e->{
+            currentAction = !(currentAction.equals( CurrentAction.drawEdge))?CurrentAction.drawEdge:CurrentAction.none;
+        });
 
+    }
+
+    private Node findNode(int x, int y) {
+
+        var imgHeight = customerView.getImage().getHeight();
+        var imgWidth = customerView.getImage().getWidth();
+
+        for(var node:nodes)
+        {
+            if((x>= node.getX() - imgWidth/2) && (x<= node.getX() + imgWidth/2)
+                    &&  (y>= node.getY() - imgHeight/2) && (y<= node.getY()+imgHeight/2))
+                return node;
+        }
+    return null;
     }
 
     private void drawInitialNodes() {
@@ -148,5 +191,7 @@ public class CustomerController {
             customerView.drawNode(nodeName,x,y);
             customerView.drawNodeTextField(x,y,nodeName);
     }
+
+
 
 }

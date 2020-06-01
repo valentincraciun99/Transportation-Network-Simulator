@@ -1,6 +1,5 @@
 package view;
 
-import model.Node;
 import model.User;
 import view.tools.*;
 
@@ -16,8 +15,9 @@ public class CustomerView {
     private JLabel drawingLabel;
     private JButton loadLastConfiguration;
     private JTextArea userCredentialsTextField;
-    private JButton buttonSetFlagToDrawing;
+    private JButton addNodeButton;
     private BufferedImage image;
+    private JButton addEdgeButton;
     public Arrow arrow;
 
 
@@ -41,11 +41,18 @@ public class CustomerView {
         initFrame();
     }
 
+
     private void initButtons() {
-        buttonSetFlagToDrawing = new JButton();
-        buttonSetFlagToDrawing.setVisible(true);
-        buttonSetFlagToDrawing.setBounds(20,20,150,50);
-        buttonSetFlagToDrawing.setText("Add Node");
+        addNodeButton = new JButton();
+        addNodeButton.setVisible(true);
+        addNodeButton.setBounds(20,20,150,50);
+        addNodeButton.setText("Add Node");
+
+
+        addEdgeButton = new JButton();
+        addEdgeButton.setVisible(true);
+        addEdgeButton.setBounds(200,20,150,50);
+        addEdgeButton.setText("Add Edge");
 
 
         loadLastConfiguration =new JButton();
@@ -124,15 +131,16 @@ public class CustomerView {
     }
 
 
-    public JButton getButtonSetFlagToDrawing() {
-        return buttonSetFlagToDrawing;
+    public JButton getAddNodeButton() {
+        return addNodeButton;
     }
 
     private void initButtonsLabel() {
         buttonsLabel = new JLabel();
 
         buttonsLabel.add(userCredentialsTextField);
-        buttonsLabel.add(buttonSetFlagToDrawing);
+        buttonsLabel.add(addNodeButton);
+        buttonsLabel.add(addEdgeButton);
 
         buttonsLabel.setBounds(10,10,765,100);
         buttonsLabel.setBackground(Color.RED);
@@ -155,6 +163,15 @@ public class CustomerView {
         frame.setContentPane(mainLabel);
 
         frame.setVisible(true);
+    }
+
+
+    public JButton getAddEdgeButton() {
+        return addEdgeButton;
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 
     public JFrame getFrame() {
