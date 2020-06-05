@@ -1,6 +1,8 @@
 package model;
 
-public class Node {
+import java.util.NoSuchElementException;
+
+public class Node   {
     Integer id;
     String name;
     Integer x;
@@ -20,6 +22,14 @@ public class Node {
         this.x = x;
         this.y = y;
         this.configId = configId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Node)
+            return this.getId() == ((Node) obj).getId();
+
+        throw new NoSuchElementException();
     }
 
     public Integer getId() {

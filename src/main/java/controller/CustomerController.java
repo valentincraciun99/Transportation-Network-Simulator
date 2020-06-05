@@ -1,6 +1,7 @@
 package controller;
 
 import business.EdgeAdditionService;
+import business.FindShortestPathService;
 import business.NodeAdditionService;
 import controller.enums.CurrentAction;
 import datastorage.repositories.ConfigurationRepository;
@@ -10,6 +11,7 @@ import model.Configuration;
 import model.Edge;
 import model.Node;
 import model.request.NodeAdditionRequest;
+import model.request.ShortestPathRequest;
 import view.CustomerView;
 
 import javax.imageio.ImageIO;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class CustomerController {
@@ -36,9 +39,13 @@ public class CustomerController {
     ArrayList<Node> nodes;
     ArrayList<Edge> edges;
     Queue<Node> selectedNodes;
+    FindShortestPathService findShortestPathService;
+    Node to;
+    Node from;
 
     public CustomerController (CustomerView customerView, ConfigurationRepository configurationRepository
-            , NodeRepository nodeRepository,EdgeRepository edgeRepository, NodeAdditionService nodeAdditionService,EdgeAdditionService edgeAdditionService)
+            , NodeRepository nodeRepository,EdgeRepository edgeRepository, NodeAdditionService nodeAdditionService
+            ,EdgeAdditionService edgeAdditionService, FindShortestPathService findShortestPathService)
     {
         this.customerView = customerView;
         this.nodeAdditionService = nodeAdditionService;
@@ -46,6 +53,7 @@ public class CustomerController {
         this.configurationRepository = configurationRepository;
         this.nodeRepository = nodeRepository;
         this.edgeRepository = edgeRepository;
+        this.findShortestPathService = findShortestPathService;
 
 
         selectedNodes =  new LinkedList<>();
@@ -57,7 +65,7 @@ public class CustomerController {
             customerView.getMainLabel().remove(customerView.getButtonLoadLastConfiguration());
 
             drawInitialNodes();
-            drawInitialEdges();
+            drawEdges(edges,Color.DARK_GRAY);
 
         });
 
@@ -109,10 +117,31 @@ public class CustomerController {
                         }
 
 
+                    } else if(currentAction.equals(CurrentAction.shortestPath))
+                    {
+                        if(from == null)
+                        {
+                            from = findNode(e.getX(),e.getY());
+                        } else if(to == null)
+                        {
+                            to = findNode(e.getX(),e.getY());
+                            if(to.getId()==from.getId())
+                                to=null;
+                            else {
+                                var pathEdges=findShortestPathService.Execute(new ShortestPathRequest(nodes, edges, from, to));
+                                drawEdges(edges,Color.DARK_GRAY);
+                                drawEdges(pathEdges,Color.GREEN);
+                                to=null;
+                                from=null;
+                            }
+                        }
+
                     }
 
-                } catch (IOException | SQLException ioException) {
+                } catch (IOException | SQLException | NullPointerException ioException) {
                     ioException.printStackTrace();
+                    to=null;
+                    from=null;
                 }
 
             }
@@ -128,9 +157,13 @@ public class CustomerController {
             selectedNodes.clear();
         });
 
+        customerView.getShortestPathButton().addActionListener(e ->{
+            currentAction = !(currentAction.equals( CurrentAction.shortestPath))?CurrentAction.shortestPath:CurrentAction.none;
+        });
+
     }
 
-    private void drawInitialEdges() {
+    private void drawEdges(List<Edge> edges,Color color) {
         Node firstNode =null;
         Node secondNode =null;
         for(var edge:edges)
@@ -146,7 +179,7 @@ public class CustomerController {
 
                 customerView.arrow.draw(firstNode.getX() - 5, firstNode.getY() - 5
                         , secondNode.getX() + 5, secondNode.getY() + 5
-                        , Color.DARK_GRAY, Color.ORANGE, 4
+                        , color, Color.ORANGE, 4
                         , customerView.getDrawingLabel().getGraphics());
             }
 

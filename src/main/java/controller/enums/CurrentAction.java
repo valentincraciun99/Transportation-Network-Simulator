@@ -1,5 +1,5 @@
 package controller.enums;
 
 public enum CurrentAction {
-    none,drawNode,drawEdge
+    none,drawNode,drawEdge,shortestPath
 }

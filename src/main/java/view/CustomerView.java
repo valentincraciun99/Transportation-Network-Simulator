@@ -18,6 +18,7 @@ public class CustomerView {
     private JButton addNodeButton;
     private BufferedImage image;
     private JButton addEdgeButton;
+    private JButton shortestPathButton;
     public Arrow arrow;
 
 
@@ -61,6 +62,11 @@ public class CustomerView {
         loadLastConfiguration.setText("Load last configuration");
         loadLastConfiguration.setBackground(Color.ORANGE);
         loadLastConfiguration.setOpaque(true);
+
+        shortestPathButton = new JButton();
+        shortestPathButton.setBounds(380,20,150,50);
+        shortestPathButton.setText("Cauta Drum Optim");
+        shortestPathButton.setVisible(true);
 
 
     }
@@ -123,7 +129,7 @@ public class CustomerView {
 
         };
         drawingLabel.setBounds(10,130,765,500);
-        drawingLabel.setBackground(Color.LIGHT_GRAY);
+        drawingLabel.setBackground(Color.WHITE);
         drawingLabel.setOpaque(true);
         drawingLabel.setVisible(true);
 
@@ -141,9 +147,10 @@ public class CustomerView {
         buttonsLabel.add(userCredentialsTextField);
         buttonsLabel.add(addNodeButton);
         buttonsLabel.add(addEdgeButton);
+        buttonsLabel.add(shortestPathButton);
 
         buttonsLabel.setBounds(10,10,765,100);
-        buttonsLabel.setBackground(Color.RED);
+        buttonsLabel.setBackground(Color.WHITE);
         buttonsLabel.setOpaque(true);
         buttonsLabel.setVisible(true);
 
@@ -157,6 +164,7 @@ public class CustomerView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 650);
         frame.setLocationRelativeTo(null);
+        frame.setBackground(Color.BLACK);
 
         frame.setResizable(false);
 
@@ -170,6 +178,7 @@ public class CustomerView {
         return addEdgeButton;
     }
 
+    public JButton getShortestPathButton(){return shortestPathButton;}
     public BufferedImage getImage() {
         return image;
     }
