@@ -65,7 +65,7 @@ public class CustomerView {
 
         shortestPathButton = new JButton();
         shortestPathButton.setBounds(380,20,150,50);
-        shortestPathButton.setText("Cauta Drum Optim");
+        shortestPathButton.setText("Find Optimal path");
         shortestPathButton.setVisible(true);
 
 

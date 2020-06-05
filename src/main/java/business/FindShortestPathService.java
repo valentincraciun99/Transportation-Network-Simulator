@@ -96,8 +96,6 @@ public class FindShortestPathService implements Service<ShortestPathRequest> {
             // finalized
             settled.add(u);
 
-            System.out.println(u);
-
             processNeighbours(u);
 
         }
