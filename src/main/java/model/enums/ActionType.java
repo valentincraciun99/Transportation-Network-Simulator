@@ -1,5 +1,5 @@
 package model.enums;
 
 public enum ActionType {
-    addUser,login
+    addUser,deleteUser,updateUser
 }
