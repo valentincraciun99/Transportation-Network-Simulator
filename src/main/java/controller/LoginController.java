@@ -8,6 +8,7 @@ import datastorage.repositories.EdgeRepository;
 import datastorage.repositories.NodeRepository;
 import datastorage.repositories.UserRepository;
 import model.enums.UserRole;
+import view.AdminView;
 import view.CustomerView;
 import view.LoginView;
 import view.tools.Arrow;
@@ -73,8 +74,9 @@ public class LoginController {
         }
         else if (user != null && user.getUserRole() == UserRole.admin)
         {
-            JOptionPane.showMessageDialog(loginView.getFrame(),"Here Should Be Admin Page");
-            //TODO: add here admin jframe
+            new AdminController(new AdminView());
+            //TODO: add an event in main to create customerController and dispose login
+            loginView.getFrame().setVisible(false);
         }
 
     }
