@@ -6,6 +6,7 @@ import model.enums.UserRole;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository extends BaseRepository {
 
@@ -56,6 +57,29 @@ public class UserRepository extends BaseRepository {
 
         return user;
 
+    }
+
+    public List<List<Object>> getAllUsersAsString() throws SQLException {
+        var params = new ArrayList<Object>();
+        List<List<Object>> result= new ArrayList<>();
+        List<Object> row =  new ArrayList<>();
+
+        var resultSet = CallStoredProcedure("{call get_all_users()}",params);
+
+        while (resultSet.next()){
+            row = new ArrayList<>() ;
+
+            row.add(resultSet.getInt(1));
+            row.add(UserRole.values()[resultSet.getInt(2)].name());
+            row.add(resultSet.getString(3));
+            row.add(resultSet.getString(4));
+            row.add(resultSet.getString(5));
+            row.add(resultSet.getInt(6));
+
+            result.add(row);
+        }
+
+        return result;
     }
 
 

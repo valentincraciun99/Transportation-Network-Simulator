@@ -74,7 +74,7 @@ public class LoginController {
         }
         else if (user != null && user.getUserRole() == UserRole.admin)
         {
-            new AdminController(new AdminView());
+            new AdminController(new AdminView(),new UserRepository());
             //TODO: add an event in main to create customerController and dispose login
             loginView.getFrame().setVisible(false);
         }
