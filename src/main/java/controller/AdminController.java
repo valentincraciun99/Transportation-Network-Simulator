@@ -21,7 +21,6 @@ public class AdminController {
             // check for selected row first
             if(this.adminView.getTable().getSelectedRow() != -1) {
                 var selectedRow = this.adminView.getTable().getSelectedRow();
-                //TODO: find user Id for selected row and delete from db before delete from the JTable
                 Integer selectedUserId = (Integer) this.adminView.getModel().getValueAt(selectedRow,0);
                 try {
                     this.userRepository.delete(selectedUserId);
