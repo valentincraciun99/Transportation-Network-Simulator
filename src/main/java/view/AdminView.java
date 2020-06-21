@@ -1,5 +1,7 @@
 package view;
 
+import view.table.UsersTable;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -13,37 +15,56 @@ public class AdminView extends JFrame {
     private DefaultTableModel model;
     //private Object[][] data;
     private String[] columnNames;
-    private JButton button;
+    private JButton deleteButton;
+    private JButton addButton;
 
 
     public AdminView()
     {
+        InitButtons();
 
+    }
 
+    private void InitButtons() {
+        deleteButton = new JButton("Remove");
+        deleteButton.setForeground(Color.RED);
+        addButton =  new JButton("Add");
+        addButton.setForeground(Color.darkGray);
+    }
+
+    public void setColumnNames(String[] columnNames) {
+        this.columnNames = columnNames;
+    }
+
+    public JTable getTable() {
+        return table;
+    }
+
+    public DefaultTableModel getModel() {
+        return model;
+    }
+
+    public String[] getColumnNames() {
+        return columnNames;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteButton;
     }
 
     public void initTable(Object[][] data) {
 
         columnNames = new String[] {"ID", "Role","Email","Password","Company","Age"};
-        model = new DefaultTableModel(data, columnNames);
+        model = new UsersTable(data, columnNames);
         table = new JTable(model);
+        table.setSelectionBackground(Color.LIGHT_GRAY);
         table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        button = new JButton("Remove");
-        button.addActionListener(ae -> {
-            // check for selected row first
-            if(table.getSelectedRow() != -1) {
 
-                //TODO: find user Id for selected row and delete from db before delete from the JTable
-
-                // remove selected row from the model
-                model.removeRow(table.getSelectedRow());
-                JOptionPane.showMessageDialog(null, "Selected row deleted successfully");
-            }
-        });
         add(new JScrollPane(table), BorderLayout.CENTER);
-        add(button, BorderLayout.SOUTH);
+        add(deleteButton, BorderLayout.SOUTH);
+        add(addButton,BorderLayout.NORTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(800, 600);
         setLocationRelativeTo(null);
         setVisible(true);
     }

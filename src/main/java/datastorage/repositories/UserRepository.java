@@ -82,6 +82,14 @@ public class UserRepository extends BaseRepository {
         return result;
     }
 
+    public void delete(Integer userId) throws SQLException {
+        var params = new ArrayList<Object>();
+        params.add(userId);
+
+        CallStoredProcedure("{call delete_user(?)}", params);
+
+    }
+
 
 
 }
