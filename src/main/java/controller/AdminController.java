@@ -2,6 +2,7 @@ package controller;
 
 import datastorage.repositories.UserRepository;
 import model.User;
+import view.AddUserView;
 import view.AdminView;
 
 import javax.swing.*;
@@ -34,6 +35,10 @@ public class AdminController {
 
 
             }
+        });
+
+        this.adminView.getAddButton().addActionListener(ae->{
+            new AddUserView();
         });
 
         LoadTable();

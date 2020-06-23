@@ -25,6 +25,10 @@ public class AdminView extends JFrame {
 
     }
 
+    public JButton getAddButton() {
+        return addButton;
+    }
+
     private void InitButtons() {
         deleteButton = new JButton("Remove");
         deleteButton.setForeground(Color.RED);
