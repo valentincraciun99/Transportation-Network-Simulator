@@ -38,10 +38,30 @@ public class AdminController {
         });
 
         this.adminView.getAddButton().addActionListener(ae->{
-            new AddUserView();
+            new AddUserController(new AddUserView(),userRepository);
+
+        });
+
+        this.adminView.getRefreshTableButton().addActionListener(e->{
+            try {
+                UpdateTable();
+            } catch (SQLException  throwables) {
+                throwables.printStackTrace();
+            }
         });
 
         LoadTable();
+
+    }
+
+    private void UpdateTable() throws SQLException {
+        rows = this.userRepository.getAllUsersAsString();
+        Object[][] rowsAsArray = new Object[rows.size()][];
+        for(int i = 0; i < rows.size(); i++) {
+            rowsAsArray[i] = rows.get(i).toArray();
+        }
+
+        this.adminView.updateTable(rowsAsArray);
 
     }
 

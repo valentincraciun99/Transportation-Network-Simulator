@@ -11,6 +11,30 @@ public class AddUserView extends JFrame {
     JButton addUserButton;
     JLabel label;
 
+    public JTextField getEmail() {
+        return email;
+    }
+
+    public JTextField getPassword() {
+        return password;
+    }
+
+    public JTextField getCompany() {
+        return company;
+    }
+
+    public JTextField getAge() {
+        return age;
+    }
+
+    public JButton getAddUserButton() {
+        return addUserButton;
+    }
+
+    public JLabel getLabel() {
+        return label;
+    }
+
     public AddUserView()
     {
         label = new JLabel();
@@ -45,7 +69,7 @@ public class AddUserView extends JFrame {
         addUserButton.setVisible(true);
         label.add(addUserButton);
 
-        setSize(400,400);
+        setSize(300,300);
         setResizable(false);
         setBackground(Color.BLACK);
         add(label);

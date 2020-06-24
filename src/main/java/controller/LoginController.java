@@ -3,6 +3,7 @@ package controller;
 import business.EdgeAdditionService;
 import business.FindShortestPathService;
 import business.NodeAdditionService;
+import com.sun.tools.javac.Main;
 import datastorage.repositories.ConfigurationRepository;
 import datastorage.repositories.EdgeRepository;
 import datastorage.repositories.NodeRepository;
@@ -20,6 +21,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+
+
+
 
 public class LoginController {
     LoginView loginView;
@@ -39,7 +43,7 @@ public class LoginController {
 
                 Login();
             } catch (SQLException throwables) {
-                JOptionPane.showMessageDialog(loginView.getFrame(),"Invalid credentials");
+                JOptionPane.showMessageDialog(loginView.getFrame(),"Invalid credentials of internal error");
                 throwables.printStackTrace();
             }
         });
@@ -47,6 +51,7 @@ public class LoginController {
 
     private void LoadLogo() throws IOException {
         var file = new File("E:\\Projects\\Transportation-Network-Simulator\\resources\\logo.jpg");
+
         loginView.setLogo(ImageIO.read(file));
 
         loginView.drawLogo(loginView.getLabel().getGraphics());
@@ -61,7 +66,7 @@ public class LoginController {
         if(user != null && user.getUserRole() == UserRole.customer
                 /*&& user.getSubscription().getEndDate().isAfter( LocalDate.now())*/)
         {
-            //TODO: here should be main page
+
             new CustomerController(new CustomerView(user, new Arrow()),new ConfigurationRepository(),new NodeRepository(),new EdgeRepository(),new NodeAdditionService(new NodeRepository()),new EdgeAdditionService(new EdgeRepository()),new FindShortestPathService());
 
             //TODO: add an event in main to create customerController and dispose login

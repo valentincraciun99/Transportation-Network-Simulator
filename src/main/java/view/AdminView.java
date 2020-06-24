@@ -17,6 +17,7 @@ public class AdminView extends JFrame {
     private String[] columnNames;
     private JButton deleteButton;
     private JButton addButton;
+    private JButton refreshTableButton;
 
 
     public AdminView()
@@ -34,6 +35,9 @@ public class AdminView extends JFrame {
         deleteButton.setForeground(Color.RED);
         addButton =  new JButton("Add");
         addButton.setForeground(Color.darkGray);
+
+        refreshTableButton = new JButton("Refresh");
+        refreshTableButton.setForeground(Color.BLUE);
     }
 
     public void setColumnNames(String[] columnNames) {
@@ -56,6 +60,10 @@ public class AdminView extends JFrame {
         return deleteButton;
     }
 
+    public JButton getRefreshTableButton() {
+        return refreshTableButton;
+    }
+
     public void initTable(Object[][] data) {
 
         columnNames = new String[] {"ID", "Role","Email","Password","Company","Age"};
@@ -66,11 +74,18 @@ public class AdminView extends JFrame {
 
         add(new JScrollPane(table), BorderLayout.CENTER);
         add(deleteButton, BorderLayout.SOUTH);
+        add(refreshTableButton,BorderLayout.AFTER_LINE_ENDS);
         add(addButton,BorderLayout.NORTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    public void updateTable(Object[][] data)
+    {
+        model = new UsersTable(data, columnNames);
+        table.setModel(model);
     }
 
 }
